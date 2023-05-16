@@ -8,3 +8,21 @@ export type cardTypes = {
   text: string;
   others: string;
 };
+
+export type featuredDataTypes = {
+  id: number;
+  bgImg: string[];
+  isSale: boolean;
+  name: string;
+  amount: string;
+  categories: string;
+  modalCategories: string[];
+  size: string[];
+  ratings: number;
+  color:
+    | {
+        type: string;
+        image: string[] | null;
+      }[]
+    | string[];
+};

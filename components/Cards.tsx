@@ -14,18 +14,9 @@ const Cards = (): JSX.Element => {
             return (
               <Box
                 key={id}
+                className={classes.bgImgWrap}
                 sx={{
                   backgroundImage: `${bgImg}`,
-                  backgroundSize: "cover",
-                  backgroundPosition: "center",
-                  backgroundRepeat: "no-repeat",
-                  height: "281px",
-                  padding: "15px",
-                  position: "relative",
-
-                  "@media (min-width:767px)": {
-                    width: "400px",
-                  },
                 }}
               >
                 <Box className={classes.innerWrap}>
@@ -61,6 +52,18 @@ const useStyles = createStyles((theme) => ({
       justifyContent: "space-between",
       flexWrap: "nowrap",
       columnGap: "15px",
+    },
+  },
+  bgImgWrap: {
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+    backgroundRepeat: "no-repeat",
+    height: "281px",
+    padding: "15px",
+    position: "relative",
+
+    [theme.fn.largerThan("sm")]: {
+      width: "400px",
     },
   },
   innerWrap: {

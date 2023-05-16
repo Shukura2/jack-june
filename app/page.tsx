@@ -1,4 +1,5 @@
 import Cards from "@/components/Cards";
+import Featured from "@/components/Featured";
 import HeroSection from "@/components/HeroSection";
 
 const Home = () => {
@@ -6,6 +7,7 @@ const Home = () => {
     <div>
       <HeroSection />
       <Cards />
+      <Featured />
     </div>
   );
 };
