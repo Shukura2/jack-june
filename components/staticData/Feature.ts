@@ -15,6 +15,7 @@ export const featured = [
     modalCategories: ["Dress", "Woman"],
     size: ["S", "M", "L"],
     ratings: 0,
+    tags: ["Coats", "Dresses"],
     color: [
       {
         type: "white",
@@ -52,6 +53,7 @@ export const featured = [
     modalCategories: ["Dress", "Woman"],
     size: ["S", "M", "L", "XL", "XXL"],
     ratings: 4,
+    tags: ["Coats", "Dresses"],
     color: [
       {
         type: "white",
@@ -82,10 +84,8 @@ export const featured = [
     modalCategories: ["Dress", "Man"],
     size: ["S", "M", "L"],
     ratings: 5,
-    color: [
-      { type: "white", image: null },
-      { type: "yellow", image: null },
-    ],
+    tags: ["Coats", "Dresses"],
+    color: null,
   },
   {
     id: 4,
@@ -103,6 +103,7 @@ export const featured = [
     modalCategories: ["Dress", "Woman"],
     size: ["S", "M", "L"],
     ratings: 5,
+    tags: ["Coats", "Dresses"],
     color: [
       {
         type: "white",
@@ -140,6 +141,7 @@ export const featured = [
     modalCategories: ["Dress", "Woman"],
     size: ["S", "M", "L"],
     ratings: 0,
+    tags: ["Coats", "Dresses"],
     color: [
       {
         type: "white",
@@ -173,6 +175,7 @@ export const featured = [
     modalCategories: ["Dress", "Woman"],
     size: ["S", "M", "L", "XL"],
     ratings: 5,
+    tags: ["Coats", "Dresses"],
     color: [""],
   },
   {
@@ -191,6 +194,7 @@ export const featured = [
     modalCategories: ["Dress", "Woman"],
     size: ["S", "M"],
     ratings: 4,
+    tags: ["Coats", "Dresses"],
     color: [
       {
         type: "white",
@@ -221,10 +225,8 @@ export const featured = [
     modalCategories: ["Dress", "Man"],
     size: ["S", "M", "L"],
     ratings: 5,
-    color: [
-      { type: "white", image: null },
-      { type: "yellow", image: null },
-    ],
+    tags: ["Coats", "Dresses"],
+    color: null,
   },
   {
     id: 9,
@@ -242,6 +244,7 @@ export const featured = [
     modalCategories: ["Dress", "Woman"],
     size: ["S", "M", "L"],
     ratings: 0,
+    tags: ["Coats", "Dresses"],
     color: [
       {
         type: "white",
@@ -275,7 +278,8 @@ export const featured = [
     modalCategories: ["Dress", "Woman"],
     size: ["S", "M", "L", "XL", "XXL"],
     ratings: 5,
-    color: [""],
+    tags: ["Coats", "Dresses"],
+    color: null,
   },
   {
     id: 11,
@@ -292,7 +296,8 @@ export const featured = [
     modalCategories: ["Dress", "Man"],
     size: ["S", "M", "L", "XL", "XXL"],
     ratings: 5,
-    color: [""],
+    tags: ["Coats", "Dresses"],
+    color: null,
   },
   {
     id: 12,
@@ -308,6 +313,7 @@ export const featured = [
     modalCategories: ["Dress", "Man"],
     size: ["S", "M", "L", "XXL"],
     ratings: 0,
-    color: ["blue", "grey"],
+    color: null,
+    tags: ["Coats", "Dresses"],
   },
 ];

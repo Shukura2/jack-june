@@ -41,7 +41,7 @@ export default Cards;
 
 const useStyles = createStyles((theme) => ({
   wrap: {
-    padding: "20px 0",
+    padding: "40px 0",
     display: "flex",
     justifyContent: "center",
     rowGap: "15px",

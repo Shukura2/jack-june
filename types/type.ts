@@ -22,7 +22,8 @@ export type featuredDataTypes = {
   color:
     | {
         type: string;
-        image: string[] | null;
+        image: string[];
       }[]
-    | string[];
+    | null;
+  tags: string[];
 };

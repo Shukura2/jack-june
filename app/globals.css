@@ -30,3 +30,8 @@ ul {
 img {
   width: 100%;
 }
+
+.swiper-button-next, .swiper-button-prev{
+  --swiper-theme-color: #c1cad1;
+  font-size: '18px';
+}
