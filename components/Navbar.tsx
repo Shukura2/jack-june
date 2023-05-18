@@ -61,7 +61,9 @@ const Navbar = (): JSX.Element => {
             <Paper className={classes.dropdown} style={styles}>
               <Box className={classes.wrap}>
                 {links.map((link) => (
-                  <Link href={link.link}>{link.label}</Link>
+                  <Link href={link.link} key={link.label}>
+                    {link.label}
+                  </Link>
                 ))}
               </Box>
             </Paper>

@@ -4,6 +4,10 @@ import { MantineProvider } from "@mantine/core";
 import { lexend } from "@/font";
 import Navbar from "@/components/Navbar";
 import useLoading from "@/utils/useLoading";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/free-mode";
+import "swiper/css/thumbs";
 
 export const metadata = {
   title: "Jack&June",

@@ -176,7 +176,7 @@ export const featured = [
     size: ["S", "M", "L", "XL"],
     ratings: 5,
     tags: ["Coats", "Dresses"],
-    color: [""],
+    color: null,
   },
   {
     id: 7,

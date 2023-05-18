@@ -1,55 +1,41 @@
 "use client";
-import { useRouter } from "next/navigation";
-import React, { useState } from "react";
-import {
-  Box,
-  Text,
-  createStyles,
-  Loader,
-  Rating,
-  Modal,
-  Grid,
-  Flex,
-  TextInput,
-  Button,
-} from "@mantine/core";
-import { useMediaQuery } from "@mantine/hooks";
-import { ArrowsDiagonal } from "tabler-icons-react";
+import { useParams } from "next/navigation";
+import React, { useState, useEffect } from "react";
+import { Swiper, SwiperSlide, SwiperClass } from "swiper/react";
+import { FreeMode, Navigation, Thumbs } from "swiper";
 import { CircleCheck, Check, Heart } from "tabler-icons-react";
 import { FaFacebookF, FaPinterestP } from "react-icons/fa";
 import { AiOutlineTwitter, AiOutlineGoogle } from "react-icons/ai";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation } from "swiper";
-import { featuredDataTypes } from "@/types/type";
-import IconCloseModal from "./Icon/IconCloseModal";
+import {
+  Box,
+  Container,
+  Grid,
+  Text,
+  Rating,
+  TextInput,
+  Button,
+  createStyles,
+  List,
+} from "@mantine/core";
+import { featured } from "@/components/staticData/Feature";
 
-const Product = ({
-  bgImg,
-  isSale,
-  name,
-  amount,
-  ratings,
-  color,
-  size,
-  modalCategories,
-  tags,
-  id,
-}: featuredDataTypes) => {
-  const router = useRouter();
-  const [isHover, setIsHover] = useState<boolean>(false);
-  const [isLoading, setIsloading] = useState<boolean>(false);
+const Product = (): JSX.Element => {
+  const params = useParams();
   const { classes } = useStyles();
-  const [isOpened, setIsOpened] = useState<boolean>(false);
-  const matches = useMediaQuery("(min-width: 1024px)");
+  const { productId } = params;
+  const [thumbsSwiper, setThumbsSwiper] = useState<SwiperClass | null>(null);
   const [selectedBox, setSelectedBox] = useState<number | null>(null);
   const [isSelectOtherColors, setIsSelectOtherColors] =
     useState<boolean>(false);
-  const [newSelectedColor, setNewSelectedColor] = useState<string | string[]>(
-    bgImg
-  );
   const [qty, setQty] = useState<number>(1);
+  const [newSelectedColor, setNewSelectedColor] = useState("");
+  const items = featured.find((item) => item.id === Number(productId));
 
-  const handleBox = (idx: number) => {
+  useEffect(() => {
+    thumbsSwiper?.slideTo(2);
+  }, []);
+
+  const handleSelectColor = (idx: number) => {
     if (idx === selectedBox) {
       setSelectedBox(null);
     } else {
@@ -57,121 +43,102 @@ const Product = ({
     }
   };
 
-  const handleDetailedPage = (id: number) => {
-    router.push(`/product/${id}`);
-  };
-
+  if (!items) {
+    return <Text>Product not found</Text>;
+  }
   return (
-    <>
-      <Box
-        onMouseEnter={() => setIsHover(true)}
-        onMouseLeave={() => setIsHover(false)}
-        onClick={() => handleDetailedPage(id)}
-        className={classes.wrap}
-      >
-        <Box
-          className={classes.productWrap}
-          sx={{ backgroundImage: `url(${bgImg[0]})` }}
+    <Box sx={{ background: "#fff" }}>
+      <Container size="xl">
+        <Grid
+          sx={{
+            margin: "50px 0",
+            "@media (max-width: 767px)": {
+              margin: "25px 0",
+            },
+          }}
         >
-          {isSale && <Box className={classes.saleTag}>SALE!</Box>}
-          {isHover && (
-            <Box
-              onClick={(event) => {
-                setIsloading(true);
-                event.stopPropagation();
-                setTimeout(() => {
-                  setIsloading(false);
-                  setIsOpened(true);
-                  return;
-                }, 1500);
-              }}
-              className={classes.hoverTag}
+          <Grid.Col md={6}>
+            <Swiper
+              spaceBetween={10}
+              navigation={true}
+              thumbs={{ swiper: thumbsSwiper }}
+              modules={[FreeMode, Navigation, Thumbs]}
+              className="mySwiper2"
             >
-              {isLoading ? <Loader color="#E25D24" /> : <ArrowsDiagonal />}
-            </Box>
-          )}
-        </Box>
-        <Box className={classes.box}>
-          <Text sx={{ fontWeight: 600, letterSpacing: "0.4px" }}>{name}</Text>
-          <Text sx={{ color: "#eb5a46", fontWeight: 600 }}>${amount}</Text>
-          {ratings === 0 ? "" : <Rating value={ratings} />}
-        </Box>
-      </Box>
+              {items.bgImg.map((item, index) => (
+                <SwiperSlide key={index}>
+                  {isSelectOtherColors ? (
+                    <img src={(items.bgImg[0] = newSelectedColor)} />
+                  ) : (
+                    <img src={item} />
+                  )}
+                </SwiperSlide>
+              ))}
+            </Swiper>
 
-      <Modal
-        opened={isOpened}
-        onClose={() => setIsOpened(false)}
-        size={matches ? "80%" : "100%"}
-        withCloseButton={false}
-        centered
-        className={classes.modalCustom}
-      >
-        <Grid>
-          <Grid.Col lg={6} className={classes.gridCol}>
-            <Swiper modules={[Navigation]} navigation>
-              {bgImg.map((image, index) => (
-                <SwiperSlide
-                  key={index}
-                  style={{
-                    backgroundImage: `${
-                      isSelectOtherColors
-                        ? `url(${newSelectedColor})`
-                        : `url(${image})`
-                    } `,
-                    backgroundPosition: "center",
-                    backgroundSize: "cover",
-                    backgroundRepeat: "no-repeat",
-                    height: "83vh",
-                    objectFit: "scale-down",
-                  }}
-                ></SwiperSlide>
+            <Swiper
+              onSwiper={setThumbsSwiper}
+              spaceBetween={10}
+              slidesPerView={4}
+              freeMode={true}
+              watchSlidesProgress={true}
+              modules={[FreeMode, Navigation, Thumbs]}
+              className="mySwiper"
+            >
+              {items.bgImg.map((item, index) => (
+                <SwiperSlide key={index}>
+                  <img src={item} />
+                </SwiperSlide>
               ))}
             </Swiper>
           </Grid.Col>
 
           <Grid.Col
-            lg={6}
-            className={classes.gridColOther}
-            h={{ base: "850px", lg: "85vh" }}
+            md={6}
+            sx={{
+              paddingLeft: "32px",
+              "@media (max-width: 767px)": { paddingLeft: "0" },
+            }}
           >
-            <Text sx={{ color: "#c1cad1" }}>Home</Text>
-            <Text className={classes.name}>{name}</Text>
-            <Text className={classes.amount}>${amount}</Text>
-            <Box className={classes.boxWrap}>
-              <Box className={classes.content}>
+            <Text className={classes.home}>Home</Text>
+            <Text className={classes.title}>{items.name}</Text>
+            <Text sx={{ fontSize: "25px" }}>${items.amount}</Text>
+            <Box className={classes.stockWrap}>
+              <Box className={classes.stockSub}>
                 <CircleCheck style={{ color: "#8aba56" }} />
                 <Text sx={{ color: "#c1cad1" }}>In Stock</Text>
               </Box>
-              <Box className={classes.ratingsWrap}>
-                {ratings === 0 ? "" : <Rating value={ratings} />}
+              <Box className={classes.ratings}>
+                {items.ratings === 0 ? "" : <Rating value={items.ratings} />}
                 <Text>(1) Write a Review?</Text>
               </Box>
             </Box>
-            <Box className={classes.contentWrap}>
+
+            <Box className={classes.text}>
               This amazing dress is sure to make you stand out from the crowd.
               Intricately designed, this stylish number is an idiosyncratic
               piece. Team it with a pair of heels or boots and minimal
               accessories for a sassy look.
             </Box>
 
-            {color && color !== null && (
+            {items.color && items.color !== null && (
               <React.Fragment>
-                <Text className={classes.colorWrap}>Color</Text>
+                <Text sx={{ padding: "25px 0 15px" }}>Color</Text>
                 <Box sx={{ display: "flex", columnGap: "10px" }}>
-                  {color &&
-                    color.map((item, index) => (
+                  {items.color &&
+                    items.color.map((item, index) => (
                       <Box
                         key={index}
                         onClick={() => {
-                          handleBox(index);
+                          handleSelectColor(index);
                           setIsSelectOtherColors(true);
                           if (item === null) {
-                            setNewSelectedColor(bgImg[0]);
+                            setNewSelectedColor(items.bgImg[0]);
                           } else {
                             setNewSelectedColor(item.image[0]);
                           }
                         }}
-                        className={classes.boxWrapper}
+                        className={classes.colorBox}
                         sx={{
                           border: `${
                             item.type === "white" ? "1px solid #c1cad1" : "none"
@@ -202,18 +169,18 @@ const Product = ({
 
             <Text sx={{ padding: "20px 0" }}>Size</Text>
             <Box sx={{ display: "flex", columnGap: "20px" }}>
-              {size.map((item) => (
+              {items.size.map((item) => (
                 <TextInput
                   key={item}
                   value={item}
                   readOnly
-                  className={classes.qtyInput}
+                  className={classes.sizeBox}
                 />
               ))}
             </Box>
 
             <Box sx={{ padding: "10px 0" }}>
-              <Text sx={{ paddingBottom: "20px" }}>Qty</Text>
+              <Text sx={{ padding: "20px 0" }}>Qty</Text>
               <Box className={classes.qtyWrap}>
                 <Box sx={{ display: "flex" }}>
                   <TextInput
@@ -221,13 +188,13 @@ const Product = ({
                     onChange={(event) => {
                       setQty(parseInt(event.target.value));
                     }}
-                    className={classes.qtyBox}
+                    className={classes.input}
                   />
                   <Box sx={{ display: "flex", flexDirection: "column" }}>
                     <Button
                       onClick={() => setQty(qty + 1)}
                       variant="outline"
-                      className={classes.qtyControl}
+                      className={classes.symbolWrap}
                     >
                       +
                     </Button>
@@ -239,24 +206,24 @@ const Product = ({
                           return;
                         }
                       }}
-                      className={classes.qtyControl}
+                      className={classes.symbolWrap}
                     >
                       -
                     </Button>
                   </Box>
                 </Box>
-                <Button variant="filled" fullWidth className={classes.cart}>
+                <Button variant="filled" fullWidth className={classes.cta}>
                   ADD TO CART
                 </Button>
               </Box>
             </Box>
 
-            <Box className={classes.wishlist}>
-              <Box className={classes.wishlistSub}>
+            <Box className={classes.wishlistWrap}>
+              <Box className={classes.wishlist}>
                 <Text>Add to Wishlist</Text>
                 <Heart size={20} style={{ color: "#eb5a46" }} />
               </Box>
-              <Box className={classes.wishlistContent}>
+              <Box className={classes.share}>
                 <Text>Share this</Text>
                 <FaFacebookF style={{ fontSize: "20px" }} />
                 <AiOutlineTwitter style={{ fontSize: "20px" }} />
@@ -264,22 +231,23 @@ const Product = ({
                 <FaPinterestP style={{ fontSize: "20px" }} />
               </Box>
             </Box>
+
             <Box sx={{ padding: "30px 0" }}>
               <Text sx={{ color: "#8b99a3", paddingBottom: "20px" }}>
                 SKU: N/A
               </Text>
-              <Box className={classes.cartWrap}>
+              <Box className={classes.sku}>
                 <Text>Categories:</Text>
                 <Box sx={{ display: "flex", columnGap: "10px" }}>
-                  {modalCategories.map((item) => (
+                  {items.modalCategories.map((item) => (
                     <Text key={item}>{item}</Text>
                   ))}
                 </Box>
               </Box>
-              <Box className={classes.tagsWrap}>
+              <Box className={classes.tagWrap}>
                 <Text>Tags:</Text>
                 <Box sx={{ display: "flex", columnGap: "10px" }}>
-                  {tags.map((tag) => (
+                  {items.tags.map((tag) => (
                     <Text key={tag} className={classes.tag}>
                       {tag}
                     </Text>
@@ -288,123 +256,95 @@ const Product = ({
               </Box>
             </Box>
           </Grid.Col>
-          <Flex className={classes.flex} onClick={() => setIsOpened(false)}>
-            <IconCloseModal />
-          </Flex>
         </Grid>
-      </Modal>
-    </>
+
+        <Text className={classes.titles}>DESCRIPTION</Text>
+        <Text className={classes.texts}>
+          Basics never wear out of fashion. You can team your basics with
+          literally everything. They can carry any look with ease. Pair it with
+          a blazer and a jean to give it that not-so-formal yet casual look,
+          with a pair of 3/4ths or chinos and uber cool loafer, it gives you fun
+          outing look.
+        </Text>
+        <Text className={classes.content}>
+          The premium knits Dresses from Zara are made of 100% combed cotton.
+          Pre-shrunk to let you worry less about shrinkage. This amazing skirt
+          is sure to make you stand out from the crowd. Team it up with a solid
+          crop top and wedge heels or casual shoes for a sassy look.
+        </Text>
+        <List withPadding listStyleType="disc" className={classes.content}>
+          <List.Item>Stonewashed</List.Item>
+          <List.Item>2-pocket design</List.Item>
+          <List.Item>Mid-rise</List.Item>
+          <List.Item>Cotton spandex fabric</List.Item>
+        </List>
+
+        <Text className={classes.titles}>PRODUCT DETAILS</Text>
+        <Text className={classes.content}>
+          Mustard brown woven A-line midi skirt, has two pockets, a full button
+          placket with a button closure on the front, and a waistband with belt
+          loops and gathers beneath Comes with a matching fabric belt
+        </Text>
+        <Text className={classes.titles}>MATERIAL & CARE</Text>
+        <Text className={classes.content}>100% Cotton</Text>
+        <Text className={classes.content}>Machine-wash cold</Text>
+      </Container>
+    </Box>
   );
 };
 
 export default Product;
 
 const useStyles = createStyles((theme) => ({
-  wrap: {
-    cursor: "pointer",
-    [theme.fn.largerThan("sm")]: {
-      width: "49%",
-    },
-    [theme.fn.largerThan("lg")]: {
-      width: "23%",
-    },
+  home: {
+    color: "#c1cad1",
+    lineHeight: 1.3,
   },
-  saleTag: {
-    background: "#eb5a46",
-    color: "#ffff",
-    borderRadius: "3px",
-    alignItems: "center",
-    textAlign: "center",
-    position: "absolute",
-    padding: "5px 10px",
-  },
-  hoverTag: {
-    width: "50px",
-    height: "50px",
-    background: "#ffff",
-    display: "grid",
-    placeItems: "center",
-    cursor: "pointer",
-    position: "absolute",
-    right: "10px",
-    top: "30px",
-    borderRadius: "5px",
-    ":hover": {
-      color: "#eb5a46",
-    },
-  },
-  box: {
-    padding: "15px 0",
-    display: "flex",
-    justifyContent: "center",
-    flexDirection: "column",
-    alignItems: "center",
-  },
-  modalCustom: {
-    "& .mantine-1q36a81": {
-      padding: "0",
-      overflow: "hidden",
-    },
-  },
-  gridCol: {
-    width: "100%",
-    position: "relative",
-    "& .mantine-1627la5": {
-      padding: "0",
-    },
-  },
-  gridColOther: {
-    padding: "30px",
-    overflow: "scroll",
-    "::-webkit-scrollbar": {
-      width: "13px",
-    },
-    "::-webkit-scrollbar-thumb": {
-      background: "#888",
-    },
-    "::-webkit-scrollbar-thumb:hover": {
-      background: "#555",
-    },
-  },
-  name: {
+  title: {
+    borderBottom: "1px solid #c1cad1",
+    padding: "15px 0 20px",
+    marginBottom: "30px",
     fontSize: "36px",
     lineHeight: 1.2,
     fontWeight: 600,
-    margin: "20px 0",
+    margin: "0.67em 0",
   },
-  amount: {
-    borderTop: "1px solid #c1cad1",
-    fontSize: "24px",
-    paddingTop: "20px",
-  },
-  boxWrap: {
-    padding: "25px 0",
+  stockWrap: {
+    padding: "30px 0",
     display: "flex",
     flexWrap: "wrap",
+
+    [theme.fn.smallerThan("md")]: {
+      padding: "0",
+    },
   },
-  content: {
+  stockSub: {
     display: "flex",
     alignItems: "center",
-    columnGap: "10px",
+    columnGap: "15px",
     padding: "10px 20px 10px 0",
     borderRight: "1px solid #8b99a3",
+
+    [theme.fn.smallerThan("md")]: {
+      borderRight: "none",
+    },
   },
-  ratingsWrap: {
+  ratings: {
     display: "flex",
     alignItems: "center",
     columnGap: "10px",
-    padding: "10px 0 10px 20px",
+    padding: "15px 0 15px 20px",
+
+    [theme.fn.smallerThan("md")]: {
+      paddingLeft: "0",
+    },
   },
-  contentWrap: {
+  text: {
     color: "#c1cad1",
-    paddingBottom: "25px",
+    paddingBottom: "30px",
     borderBottom: "1px solid #c1cad1",
   },
-  colorWrap: {
-    paddingTop: "25px",
-    paddingBottom: "15px",
-  },
-  boxWrapper: {
+  colorBox: {
     width: "30px",
     height: "30px",
     borderRadius: "50%",
@@ -412,13 +352,13 @@ const useStyles = createStyles((theme) => ({
     placeContent: "center",
     cursor: "pointer",
   },
-  qtyInput: {
-    width: "40px",
-    height: "40px",
+  sizeBox: {
+    width: "50px",
     cursor: "pointer",
     "& .mantine-Input-input": {
       padding: "0 2px",
       textAlign: "center",
+      height: "50px",
     },
   },
   qtyWrap: {
@@ -426,7 +366,7 @@ const useStyles = createStyles((theme) => ({
     alignItems: "center",
     columnGap: "20px",
   },
-  qtyBox: {
+  input: {
     width: "60px",
     borderRadius: "0",
     "& .mantine-Input-input": {
@@ -435,7 +375,7 @@ const useStyles = createStyles((theme) => ({
       textAlign: "center",
     },
   },
-  qtyControl: {
+  symbolWrap: {
     width: "30px",
     height: "30px",
     borderRadius: "0",
@@ -446,15 +386,15 @@ const useStyles = createStyles((theme) => ({
       borderColor: "#8b99a3",
     },
   },
-  cart: {
+  cta: {
     background: "#000",
     height: "60px",
     ":hover": {
       background: "#000",
     },
   },
-  wishlist: {
-    padding: "20px 0 35px ",
+  wishlistWrap: {
+    padding: "25px 0 40px ",
     display: "flex",
     alignItems: "center",
     flexWrap: "wrap",
@@ -464,7 +404,7 @@ const useStyles = createStyles((theme) => ({
       paddingBottom: "10px",
     },
   },
-  wishlistSub: {
+  wishlist: {
     padding: "5px 0 5px",
     marginRight: "20px",
     borderBottom: "1px dashed #000",
@@ -473,7 +413,7 @@ const useStyles = createStyles((theme) => ({
     columnGap: "10px",
     width: "fit-content",
   },
-  wishlistContent: {
+  share: {
     display: "flex",
     alignItems: "center",
     columnGap: "15px",
@@ -485,13 +425,13 @@ const useStyles = createStyles((theme) => ({
       paddingLeft: "0",
     },
   },
-  cartWrap: {
+  sku: {
     display: "flex",
     columnGap: "10px",
     paddingBottom: "20px",
     color: "#8b99a3",
   },
-  tagsWrap: {
+  tagWrap: {
     display: "flex",
     columnGap: "10px",
     color: "#8b99a3",
@@ -503,17 +443,19 @@ const useStyles = createStyles((theme) => ({
       color: "white",
     },
   },
-  flex: {
-    position: "absolute",
-    top: "20px",
-    right: "20px",
+  titles: {
+    paddingBottom: "5px",
+    fontWeight: 600,
   },
-  productWrap: {
-    backgroundSize: "cover",
-    backgroundPosition: "center",
-    backgroundRepeat: "no-repeat",
-    height: "497px",
-    padding: "10px",
-    position: "relative",
+  texts: {
+    color: "#8b99a3",
+    margin: "5px 0",
+    lineHeight: 2,
+  },
+  content: {
+    color: "#8b99a3",
+    margin: "5px 0",
+    lineHeight: 2,
+    paddingBottom: "15px",
   },
 }));
