@@ -15,10 +15,7 @@ import {
 import { useDisclosure } from "@mantine/hooks";
 import { links } from "./staticData/Navbar";
 import { lobster_two } from "@/font";
-
-type linkTypes = {
-  [key: string]: string;
-};
+import { dataTypes } from "@/types/type";
 
 const Navbar = (): JSX.Element => {
   const { classes } = useStyles();
@@ -37,7 +34,7 @@ const Navbar = (): JSX.Element => {
           </Text>
         </Link>
         <Group spacing={30} className={classes.links}>
-          {links.map((link: linkTypes) => (
+          {links.map((link: dataTypes) => (
             <Link href={link.link} key={link.link} passHref>
               <Text
                 className={`${
@@ -64,7 +61,9 @@ const Navbar = (): JSX.Element => {
             <Paper className={classes.dropdown} style={styles}>
               <Box className={classes.wrap}>
                 {links.map((link) => (
-                  <Link href={link.link}>{link.label}</Link>
+                  <Link href={link.link} key={link.label}>
+                    {link.label}
+                  </Link>
                 ))}
               </Box>
             </Paper>

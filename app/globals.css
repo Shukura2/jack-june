@@ -30,3 +30,34 @@ ul {
 img {
   width: 100%;
 }
+
+.swiper-button-next, .swiper-button-prev{
+  --swiper-theme-color: #c1cad1;
+  font-size: '18px';
+}
+
+/* detailed page... */
+.mySwiper2 {
+  height: 75%;
+  width: 100%;
+  margin-bottom: 5%;
+}
+.mySwiper {
+  height: 20%;
+}
+.swiper-slide {
+  background-size: cover;
+  background-position: center;
+}
+
+.mySwiper .swiper-slide-thumb-active {
+  border-bottom: 3px solid #000;
+  padding-bottom: 15px;
+}
+.swiper-slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+
+}
