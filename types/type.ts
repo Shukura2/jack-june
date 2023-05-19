@@ -27,3 +27,13 @@ export type featuredDataTypes = {
     | null;
   tags: string[];
 };
+
+export type blogAndUpdateTypes = {
+  id: number;
+  image: string;
+  likes: number;
+  share: number;
+  tagOne: string;
+  tagTwo: string;
+  title: string;
+};
