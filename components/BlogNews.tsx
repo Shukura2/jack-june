@@ -6,6 +6,7 @@ import { Pagination } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { blogAndNewsUpdate } from "./staticData/Blog";
 import { blogAndUpdateTypes } from "@/types/type";
+import { giftWrapSection } from "./staticData/Gift";
 
 const BlogNews = (): JSX.Element => {
   const { classes } = useStyles();
@@ -91,6 +92,37 @@ const BlogNews = (): JSX.Element => {
             );
           })}
         </Swiper>
+
+        <Box sx={{ padding: "30px 0" }}>
+          <Box className={classes.giftBox}>
+            {giftWrapSection.map((item) => {
+              const { id, bgColor, icon, iconAlt, text, subText } = item;
+              return (
+                <Box
+                  sx={{
+                    backgroundColor: bgColor,
+                  }}
+                  className={classes.contentBox}
+                  key={id}
+                >
+                  <img
+                    src={icon}
+                    alt={iconAlt}
+                    style={{
+                      width: "40px",
+                      height: "43px",
+                      marginRight: "20px",
+                    }}
+                  />
+                  <Box>
+                    <Text className={classes.textHeader}>{text}</Text>
+                    <Text className={classes.textOther}>{subText}</Text>
+                  </Box>
+                </Box>
+              );
+            })}
+          </Box>
+        </Box>
       </Container>
     </Box>
   );
@@ -150,5 +182,35 @@ const useStyles = createStyles((theme) => ({
     margin: "15px 0",
     fontSize: "20px",
     fontWeight: 600,
+  },
+  giftBox: {
+    display: "flex",
+    flexDirection: "column",
+    rowGap: "15px",
+
+    [theme.fn.largerThan("md")]: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+    },
+  },
+  contentBox: {
+    padding: "15px 25px",
+    display: "flex",
+    color: "#fff",
+
+    [theme.fn.largerThan("md")]: {
+      width: "32.33%",
+    },
+  },
+  textHeader: {
+    fontSize: "14px",
+    lineHeight: 1.4,
+    textTransform: "uppercase",
+    fontWeight: 600,
+    marginTop: "6px",
+  },
+  textOther: {
+    fontSize: "16px",
+    lineHeight: 1.4,
   },
 }));
