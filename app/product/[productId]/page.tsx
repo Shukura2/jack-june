@@ -33,7 +33,7 @@ const Product = (): JSX.Element => {
 
   useEffect(() => {
     thumbsSwiper?.slideTo(2);
-  }, []);
+  }, [thumbsSwiper]);
 
   const handleSelectColor = (idx: number) => {
     if (idx === selectedBox) {

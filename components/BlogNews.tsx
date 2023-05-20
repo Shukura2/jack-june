@@ -84,7 +84,7 @@ const BlogNews = (): JSX.Element => {
 
                   <Text className={classes.titleOther}>{title}</Text>
                   <Text sx={{ color: "#8b99a3", lineHeight: 1.3 }}>
-                    Do you think the ripped Denim you're wearing makes it good
+                    Do you think the ripped Denim you&apos;re wearing makes it good
                     on its own? Do you?
                   </Text>
                 </Box>
