@@ -10,7 +10,7 @@ import "swiper/css/free-mode";
 import "swiper/css/thumbs";
 import Footer from "@/components/Footer";
 
-export const metadata = {
+const metadata = {
   title: "Jack&June",
   description: "Jack&June is a detailed shop for men and women fashion.",
 };
