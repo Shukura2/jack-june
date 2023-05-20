@@ -37,3 +37,9 @@ export type blogAndUpdateTypes = {
   tagTwo: string;
   title: string;
 };
+
+export type accessoriesType = {
+  id: number;
+  image: string;
+  isSale: boolean;
+};

@@ -1,3 +1,4 @@
+import Accesories from "@/components/Accesories";
 import BlogNews from "@/components/BlogNews";
 import Cards from "@/components/Cards";
 import Featured from "@/components/Featured";
@@ -12,6 +13,7 @@ const Home = () => {
       <Cards />
       <Featured />
       <Wilderness />
+      <Accesories />
       <Subscribe />
       <BlogNews />
     </div>
