@@ -8,6 +8,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/free-mode";
 import "swiper/css/thumbs";
+import Footer from "@/components/Footer";
 
 export const metadata = {
   title: "Jack&June",
@@ -36,7 +37,7 @@ export default function RootLayout({
             <>
               <Navbar />
               {children}
-              <p>Footer</p>
+              <Footer />
             </>
           )}
         </MantineProvider>
