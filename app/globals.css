@@ -31,7 +31,7 @@ img {
   width: 100%;
 }
 .swiper-button-next, .swiper-button-prev{
-  --swiper-theme-color: #c1cad1;
+  --swiper-theme-color: #c1cad1 !important;
   font-size: '18px';
 }
 .mySwiper2 {
@@ -47,7 +47,7 @@ img {
   background-position: center;
 }
 .mySwiper .swiper-slide-thumb-active {
-  border-bottom: 3px solid #000;
+  border-bottom: 3px solid #000 !important;
   padding-bottom: 15px;
 }
 .swiper-slide img {
