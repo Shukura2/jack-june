@@ -30,13 +30,10 @@ ul {
 img {
   width: 100%;
 }
-
 .swiper-button-next, .swiper-button-prev{
-  --swiper-theme-color: #c1cad1;
+  --swiper-theme-color: #c1cad1 !important;
   font-size: '18px';
 }
-
-/* detailed page... */
 .mySwiper2 {
   height: 75%;
   width: 100%;
@@ -49,9 +46,8 @@ img {
   background-size: cover;
   background-position: center;
 }
-
 .mySwiper .swiper-slide-thumb-active {
-  border-bottom: 3px solid #000;
+  border-bottom: 3px solid #000 !important;
   padding-bottom: 15px;
 }
 .swiper-slide img {
@@ -59,5 +55,9 @@ img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-
+}
+@media (max-width:767px) {
+  .swiper-slide img {
+    max-width: 100%
+  }
 }

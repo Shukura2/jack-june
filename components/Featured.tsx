@@ -66,7 +66,7 @@ const Featured = (): JSX.Element => {
           ))}
         </Box>
 
-        <Box>
+        <Box sx={{ paddingBottom: "50px" }}>
           {loading ? (
             <Box className={classes.loaderWrap}>
               <Loader color="#E25D24" />
