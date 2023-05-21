@@ -47,7 +47,7 @@ const Footer = (): JSX.Element => {
         <div className={classes.groups}>{groups}</div>
       </Container>
       <Container size="xl" className={classes.afterFooter}>
-        <Text>© 2023 Jack&June. All rights reserved.</Text>
+        <Text>© 2023 Jack&June.</Text>
 
         <Group spacing={0} className={classes.social} position="right" noWrap>
           <ActionIcon size="lg">

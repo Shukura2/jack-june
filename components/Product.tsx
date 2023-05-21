@@ -45,11 +45,11 @@ const Product = ({
   const [isSelectOtherColors, setIsSelectOtherColors] =
     useState<boolean>(false);
   const [newSelectedColor, setNewSelectedColor] = useState<string | string[]>(
-    bgImg
+    ""
   );
   const [qty, setQty] = useState<number>(1);
 
-  const handleBox = (idx: number) => {
+  const handleCheckMark = (idx: number) => {
     if (idx === selectedBox) {
       setSelectedBox(null);
     } else {
@@ -153,49 +153,39 @@ const Product = ({
               piece. Team it with a pair of heels or boots and minimal
               accessories for a sassy look.
             </Box>
-
             {color && color !== null && (
               <React.Fragment>
                 <Text className={classes.colorWrap}>Color</Text>
                 <Box sx={{ display: "flex", columnGap: "10px" }}>
-                  {color &&
-                    color.map((item, index) => (
-                      <Box
-                        key={index}
-                        onClick={() => {
-                          handleBox(index);
-                          setIsSelectOtherColors(true);
-                          if (item === null) {
-                            setNewSelectedColor(bgImg[0]);
-                          } else {
-                            setNewSelectedColor(item.image[0]);
-                          }
-                        }}
-                        className={classes.boxWrapper}
-                        sx={{
-                          border: `${
-                            item.type === "white" ? "1px solid #c1cad1" : "none"
-                          }`,
-                          backgroundColor: `${item.type}`,
-                        }}
-                      >
-                        {index === selectedBox ? (
-                          <React.Fragment>
-                            {item.type === "white" ? (
-                              <Check
-                                color="#c1cad1"
-                                size={17}
-                                strokeWidth={3}
-                              />
-                            ) : (
-                              <Check color="#fff" size={17} strokeWidth={3} />
-                            )}
-                          </React.Fragment>
-                        ) : (
-                          ""
-                        )}
-                      </Box>
-                    ))}
+                  {color.map((item, index) => (
+                    <Box
+                      key={index}
+                      onClick={() => {
+                        handleCheckMark(index);
+                        setIsSelectOtherColors(true);
+                        setNewSelectedColor(item.image[0]);
+                      }}
+                      className={classes.boxWrapper}
+                      sx={{
+                        border: `${
+                          item.type === "white" ? "1px solid #c1cad1" : "none"
+                        }`,
+                        backgroundColor: `${item.type}`,
+                      }}
+                    >
+                      {index === selectedBox ? (
+                        <React.Fragment>
+                          {item.type === "white" ? (
+                            <Check color="#c1cad1" size={17} strokeWidth={3} />
+                          ) : (
+                            <Check color="#fff" size={17} strokeWidth={3} />
+                          )}
+                        </React.Fragment>
+                      ) : (
+                        ""
+                      )}
+                    </Box>
+                  ))}
                 </Box>
               </React.Fragment>
             )}

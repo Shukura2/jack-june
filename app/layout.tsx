@@ -10,7 +10,7 @@ import "swiper/css/free-mode";
 import "swiper/css/thumbs";
 import Footer from "@/components/Footer";
 
-const metadata = {
+export const metadata = {
   title: "Jack&June",
   description: "Jack&June is a detailed shop for men and women fashion.",
 };
@@ -23,6 +23,9 @@ export default function RootLayout({
   const { loading } = useLoading();
   return (
     <html lang="en" className={lexend.className}>
+      <head>
+        <title>Jack&June</title>
+      </head>
       <body>
         <MantineProvider
           withGlobalStyles

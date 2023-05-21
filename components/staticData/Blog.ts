@@ -50,3 +50,5 @@ export const blogAndNewsUpdate = [
     title: `When it’s Winter but you feel like June`,
   },
 ];
+
+

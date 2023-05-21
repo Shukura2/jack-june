@@ -8,10 +8,6 @@ export const links = [
     label: "Shop",
   },
   {
-    link: "/product",
-    label: "Product",
-  },
-  {
     link: "/pages",
     label: "Pages",
   },

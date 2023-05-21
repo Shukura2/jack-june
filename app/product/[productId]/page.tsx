@@ -121,7 +121,7 @@ const Product = (): JSX.Element => {
               accessories for a sassy look.
             </Box>
 
-            {items.color && items.color !== null && (
+            {items.color && (
               <React.Fragment>
                 <Text sx={{ padding: "25px 0 15px" }}>Color</Text>
                 <Box sx={{ display: "flex", columnGap: "10px" }}>
@@ -132,11 +132,7 @@ const Product = (): JSX.Element => {
                         onClick={() => {
                           handleSelectColor(index);
                           setIsSelectOtherColors(true);
-                          if (item === null) {
-                            setNewSelectedColor(items.bgImg[0]);
-                          } else {
-                            setNewSelectedColor(item.image[0]);
-                          }
+                          setNewSelectedColor(item.image[0]);
                         }}
                         className={classes.colorBox}
                         sx={{
