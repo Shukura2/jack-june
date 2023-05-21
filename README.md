@@ -1,34 +1,29 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Jack&June
 
-## Getting Started
+## A functional frontend project written with NextJS 13.4, Typescript and MantineUI!
 
-First, run the development server:
+Jack&June is a detailed shop for men and women fashion.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+In this app, a user can:
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- See all products available for sale
+- Access detailed page for selected products
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## How to install this app
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+- Clone this project
+- Run npm install
+- Run npm run dev
 
-## Learn More
+## How to tweak this project for your own use
 
-To learn more about Next.js, take a look at the following resources:
+I'd say clone and rename this project for your own purposes.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Find a bug?
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+If you found an issue or would like to submit an improvement to this project, please submit an issue using the Issues tab above. If you would like to submit a PR with a fix, reference the issue you created.
 
-## Deploy on Vercel
+## Known issues (Work in progress)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- After a user selects a color for product and use the next or previous button, same image re-appears.
+  These are coming soon!
