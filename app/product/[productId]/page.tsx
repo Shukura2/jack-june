@@ -2,7 +2,7 @@
 import { useParams } from "next/navigation";
 import Image from "next/image";
 import React, { useState, useEffect } from "react";
-import { Swiper, SwiperSlide, SwiperClass } from "swiper/react";
+import { Swiper, SwiperSlide, SwiperClass, useSwiper } from "swiper/react";
 import { FreeMode, Navigation, Thumbs } from "swiper";
 import { CircleCheck, Check, Heart } from "tabler-icons-react";
 import { FaFacebookF, FaPinterestP } from "react-icons/fa";
@@ -25,26 +25,51 @@ const Product = (): JSX.Element => {
   const { classes } = useStyles();
   const { productId } = params;
   const [thumbsSwiper, setThumbsSwiper] = useState<SwiperClass | null>(null);
-  const [selectedBox, setSelectedBox] = useState<number | null>(null);
-  const [isSelectOtherColors, setIsSelectOtherColors] =
-    useState<boolean>(false);
+  const [swiper, setSwiper] = useState<SwiperClass | null>(null);
+  const [selectedColourIndex, setSelectedColourIndex] = useState<number | null>(
+    null
+  );
   const [qty, setQty] = useState<number>(1);
-  const [newSelectedColor, setNewSelectedColor] = useState<string>("");
-  const items = featured.find((item) => item.id === Number(productId));
+  const productItem = featured.find((item) => item.id === Number(productId));
+  /**
+   * refactor swiperItems to a state that can be modified
+   * and use it to set the thumbsSwiper
+   */
+  const [swiperItems, setSwiperItems] = useState<string[]>([]);
 
+  useEffect(() => {
+    if (productItem?.bgImg) {
+      setSwiperItems(productItem.bgImg);
+    }
+  }, [productItem]);
+  // go ahead and test
   useEffect(() => {
     thumbsSwiper?.slideTo(2);
   }, [thumbsSwiper]);
 
-  const handleSelectColor = (idx: number) => {
-    if (idx === selectedBox) {
-      setSelectedBox(null);
-    } else {
-      setSelectedBox(idx);
+  useEffect(() => {
+    if (selectedColourIndex !== null) {
+      swiper && swiper.slideTo(0);
     }
+  }, [swiperItems]);
+
+  const handleSelectColor = (idx: number) => {
+    setSelectedColourIndex(idx === selectedColourIndex ? null : idx);
   };
 
-  if (!items) {
+  useEffect(() => {
+    if (selectedColourIndex !== null) {
+      const selectedColor =
+        productItem?.color && productItem?.color[selectedColourIndex];
+      const selectedColorImg = selectedColor?.image[0];
+      setSwiperItems([
+        selectedColorImg!!,
+        ...productItem?.bgImg.filter((item) => item !== selectedColorImg)!!,
+      ]);
+    }
+  }, [selectedColourIndex]);
+
+  if (!productItem) {
     return <Text>Product not found</Text>;
   }
   return (
@@ -60,43 +85,34 @@ const Product = (): JSX.Element => {
         >
           <Grid.Col md={6}>
             <Swiper
+              onSwiper={setSwiper}
               spaceBetween={10}
-              navigation={true}
+              navigation
               thumbs={{ swiper: thumbsSwiper }}
               modules={[FreeMode, Navigation, Thumbs]}
               className="mySwiper2"
             >
-              {items.bgImg.map((item, index) => (
+              {swiperItems?.map((item, index) => (
                 <SwiperSlide key={index}>
-                  {isSelectOtherColors ? (
-                    <Image
-                      src={newSelectedColor}
-                      width={600}
-                      height={839}
-                      alt="Product Image"
-                    />
-                  ) : (
-                    <Image
-                      src={item}
-                      width={600}
-                      height={839}
-                      alt="Product Image"
-                    />
-                  )}
+                  <Image
+                    src={item}
+                    width={600}
+                    height={839}
+                    alt="Product Image"
+                  />
                 </SwiperSlide>
               ))}
             </Swiper>
-
             <Swiper
               onSwiper={setThumbsSwiper}
               spaceBetween={10}
               slidesPerView={4}
-              freeMode={true}
-              watchSlidesProgress={true}
+              freeMode
+              watchSlidesProgress
               modules={[FreeMode, Navigation, Thumbs]}
               className="mySwiper"
             >
-              {items.bgImg.map((item, index) => (
+              {swiperItems.map((item, index) => (
                 <SwiperSlide key={index}>
                   <Image
                     src={item}
@@ -108,7 +124,6 @@ const Product = (): JSX.Element => {
               ))}
             </Swiper>
           </Grid.Col>
-
           <Grid.Col
             md={6}
             sx={{
@@ -117,38 +132,38 @@ const Product = (): JSX.Element => {
             }}
           >
             <Text className={classes.home}>Home</Text>
-            <Text className={classes.title}>{items.name}</Text>
-            <Text sx={{ fontSize: "25px" }}>${items.amount}</Text>
+            <Text className={classes.title}>{productItem.name}</Text>
+            <Text sx={{ fontSize: "25px" }}>${productItem.amount}</Text>
             <Box className={classes.stockWrap}>
               <Box className={classes.stockSub}>
                 <CircleCheck style={{ color: "#8aba56" }} />
                 <Text sx={{ color: "#c1cad1" }}>In Stock</Text>
               </Box>
               <Box className={classes.ratings}>
-                {items.ratings === 0 ? "" : <Rating value={items.ratings} />}
+                {productItem.ratings === 0 ? (
+                  ""
+                ) : (
+                  <Rating value={productItem.ratings} />
+                )}
                 <Text>(1) Write a Review?</Text>
               </Box>
             </Box>
-
             <Box className={classes.text}>
               This amazing dress is sure to make you stand out from the crowd.
               Intricately designed, this stylish number is an idiosyncratic
               piece. Team it with a pair of heels or boots and minimal
               accessories for a sassy look.
             </Box>
-
-            {items.color && (
-              <React.Fragment>
+            {productItem.color && (
+              <>
                 <Text sx={{ padding: "25px 0 15px" }}>Color</Text>
                 <Box sx={{ display: "flex", columnGap: "10px" }}>
-                  {items.color &&
-                    items.color.map((item, index) => (
+                  {productItem.color &&
+                    productItem.color.map((item, index) => (
                       <Box
                         key={index}
                         onClick={() => {
                           handleSelectColor(index);
-                          setIsSelectOtherColors(true);
-                          setNewSelectedColor(item.image[0]);
                         }}
                         className={classes.colorBox}
                         sx={{
@@ -158,8 +173,8 @@ const Product = (): JSX.Element => {
                           backgroundColor: `${item.type}`,
                         }}
                       >
-                        {index === selectedBox ? (
-                          <React.Fragment>
+                        {index === selectedColourIndex ? (
+                          <>
                             {item.type === "white" ? (
                               <Check
                                 color="#c1cad1"
@@ -169,19 +184,18 @@ const Product = (): JSX.Element => {
                             ) : (
                               <Check color="#fff" size={17} strokeWidth={3} />
                             )}
-                          </React.Fragment>
+                          </>
                         ) : (
                           ""
                         )}
                       </Box>
                     ))}
                 </Box>
-              </React.Fragment>
+              </>
             )}
-
             <Text sx={{ padding: "20px 0" }}>Size</Text>
             <Box sx={{ display: "flex", columnGap: "20px" }}>
-              {items.size.map((item) => (
+              {productItem.size.map((item) => (
                 <TextInput
                   key={item}
                   value={item}
@@ -190,7 +204,6 @@ const Product = (): JSX.Element => {
                 />
               ))}
             </Box>
-
             <Box sx={{ padding: "10px 0" }}>
               <Text sx={{ padding: "20px 0" }}>Qty</Text>
               <Box className={classes.qtyWrap}>
@@ -215,7 +228,6 @@ const Product = (): JSX.Element => {
                       onClick={() => {
                         if (qty > 1) {
                           setQty(qty - 1);
-                          return;
                         }
                       }}
                       className={classes.symbolWrap}
@@ -229,7 +241,6 @@ const Product = (): JSX.Element => {
                 </Button>
               </Box>
             </Box>
-
             <Box className={classes.wishlistWrap}>
               <Box className={classes.wishlist}>
                 <Text>Add to Wishlist</Text>
@@ -243,7 +254,6 @@ const Product = (): JSX.Element => {
                 <FaPinterestP style={{ fontSize: "20px" }} />
               </Box>
             </Box>
-
             <Box sx={{ padding: "30px 0" }}>
               <Text sx={{ color: "#8b99a3", paddingBottom: "20px" }}>
                 SKU: N/A
@@ -251,7 +261,7 @@ const Product = (): JSX.Element => {
               <Box className={classes.sku}>
                 <Text>Categories:</Text>
                 <Box sx={{ display: "flex", columnGap: "10px" }}>
-                  {items.modalCategories.map((item) => (
+                  {productItem.modalCategories.map((item) => (
                     <Text key={item}>{item}</Text>
                   ))}
                 </Box>
@@ -259,7 +269,7 @@ const Product = (): JSX.Element => {
               <Box className={classes.tagWrap}>
                 <Text>Tags:</Text>
                 <Box sx={{ display: "flex", columnGap: "10px" }}>
-                  {items.tags.map((tag) => (
+                  {productItem.tags.map((tag) => (
                     <Text key={tag} className={classes.tag}>
                       {tag}
                     </Text>
@@ -269,7 +279,6 @@ const Product = (): JSX.Element => {
             </Box>
           </Grid.Col>
         </Grid>
-
         <Text className={classes.titles}>DESCRIPTION</Text>
         <Text className={classes.texts}>
           Basics never wear out of fashion. You can team your basics with
@@ -290,7 +299,6 @@ const Product = (): JSX.Element => {
           <List.Item>Mid-rise</List.Item>
           <List.Item>Cotton spandex fabric</List.Item>
         </List>
-
         <Text className={classes.titles}>PRODUCT DETAILS</Text>
         <Text className={classes.content}>
           Mustard brown woven A-line midi skirt, has two pockets, a full button
