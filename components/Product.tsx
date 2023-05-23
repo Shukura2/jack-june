@@ -102,12 +102,13 @@ const Product = ({
         opened={isOpened}
         onClose={() => setIsOpened(false)}
         size={matches ? "80%" : "100%"}
-        withCloseButton={false}
+        padding={0}
         centered
+        withCloseButton={false}
         className={classes.modalCustom}
       >
         <Grid>
-          <Grid.Col lg={6} className={classes.gridCol}>
+          <Grid.Col lg={6}>
             <Swiper modules={[Navigation]} navigation>
               {bgImg.map((image, index) => (
                 <SwiperSlide
@@ -121,8 +122,7 @@ const Product = ({
                     backgroundPosition: "center",
                     backgroundSize: "cover",
                     backgroundRepeat: "no-repeat",
-                    height: "83vh",
-                    objectFit: "scale-down",
+                    height: "699px",
                   }}
                 ></SwiperSlide>
               ))}
@@ -131,8 +131,8 @@ const Product = ({
 
           <Grid.Col
             lg={6}
-            className={classes.gridColOther}
-            h={{ base: "850px", lg: "85vh" }}
+            p={{ base: "20px", md: "20px" }}
+            className={classes.gridCol}
           >
             <Text sx={{ color: "#c1cad1" }}>Home</Text>
             <Text className={classes.name}>{name}</Text>
@@ -147,6 +147,7 @@ const Product = ({
                 <Text>(1) Write a Review?</Text>
               </Box>
             </Box>
+
             <Box className={classes.contentWrap}>
               This amazing dress is sure to make you stand out from the crowd.
               Intricately designed, this stylish number is an idiosyncratic
@@ -254,6 +255,7 @@ const Product = ({
                 <FaPinterestP style={{ fontSize: "20px" }} />
               </Box>
             </Box>
+
             <Box sx={{ padding: "30px 0" }}>
               <Text sx={{ color: "#8b99a3", paddingBottom: "20px" }}>
                 SKU: N/A
@@ -331,29 +333,27 @@ const useStyles = createStyles((theme) => ({
     alignItems: "center",
   },
   modalCustom: {
-    "& .mantine-1q36a81": {
+    "& .mantine-Grid-root": {
       padding: "0",
-      overflow: "hidden",
+    },
+    "& .mantine-Modal-content": {
+      "::-webkit-scrollbar": {
+        display: "none",
+      },
     },
   },
   gridCol: {
-    width: "100%",
-    position: "relative",
-    "& .mantine-1627la5": {
-      padding: "0",
-    },
-  },
-  gridColOther: {
-    padding: "30px",
-    overflow: "scroll",
+    height: "699px",
+    overflowX: "hidden",
+    overflowY: "scroll",
     "::-webkit-scrollbar": {
       width: "13px",
     },
+    "::-webkit-scrollbar-track": {
+      background: "#f1f1f1",
+    },
     "::-webkit-scrollbar-thumb": {
       background: "#888",
-    },
-    "::-webkit-scrollbar-thumb:hover": {
-      background: "#555",
     },
   },
   name: {
