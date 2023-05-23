@@ -4,27 +4,27 @@ export const links = [
     label: "Home",
   },
   {
-    link: "/shop",
+    link: "/",
     label: "Shop",
   },
   {
-    link: "/pages",
+    link: "/",
     label: "Pages",
   },
   {
-    link: "/features",
+    link: "/",
     label: "Features",
   },
   {
-    link: "/blog",
+    link: "/",
     label: "Blog",
   },
   {
-    link: "/about",
+    link: "/",
     label: "About",
   },
   {
-    link: "/contact",
+    link: "/",
     label: "Contact",
   },
 ];

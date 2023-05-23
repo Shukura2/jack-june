@@ -1,6 +1,5 @@
 "use client";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import {
   Burger,
   Container,
@@ -19,8 +18,7 @@ import { dataTypes } from "@/types/type";
 
 const Navbar = (): JSX.Element => {
   const { classes } = useStyles();
-  const [opened, { toggle }] = useDisclosure(false);
-  const pathname = usePathname();
+  const [opened, { toggle, close }] = useDisclosure(false);
   return (
     <Header height={80} className={classes.root}>
       <Container size="xl" className={classes.header}>
@@ -36,15 +34,7 @@ const Navbar = (): JSX.Element => {
         <Group spacing={30} className={classes.links}>
           {links.map((link: dataTypes) => (
             <Link href={link.link} key={link.link} passHref>
-              <Text
-                className={`${
-                  pathname === link.link
-                    ? classes.isActive
-                    : classes.linkDesktop
-                }`}
-              >
-                {link.label}
-              </Text>
+              <Text className={classes.linkDesktop}>{link.label}</Text>
             </Link>
           ))}
         </Group>
@@ -61,7 +51,7 @@ const Navbar = (): JSX.Element => {
             <Paper className={classes.dropdown} style={styles}>
               <Box className={classes.wrap}>
                 {links.map((link) => (
-                  <Link href={link.link} key={link.label}>
+                  <Link href={link.link} key={link.label} onClick={close}>
                     {link.label}
                   </Link>
                 ))}
