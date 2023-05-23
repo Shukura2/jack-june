@@ -1,5 +1,6 @@
 "use client";
 import { useParams } from "next/navigation";
+import Image from "next/image";
 import React, { useState, useEffect } from "react";
 import { Swiper, SwiperSlide, SwiperClass } from "swiper/react";
 import { FreeMode, Navigation, Thumbs } from "swiper";
@@ -28,7 +29,7 @@ const Product = (): JSX.Element => {
   const [isSelectOtherColors, setIsSelectOtherColors] =
     useState<boolean>(false);
   const [qty, setQty] = useState<number>(1);
-  const [newSelectedColor, setNewSelectedColor] = useState("");
+  const [newSelectedColor, setNewSelectedColor] = useState<string>("");
   const items = featured.find((item) => item.id === Number(productId));
 
   useEffect(() => {
@@ -68,9 +69,19 @@ const Product = (): JSX.Element => {
               {items.bgImg.map((item, index) => (
                 <SwiperSlide key={index}>
                   {isSelectOtherColors ? (
-                    <img src={(items.bgImg[0] = newSelectedColor)} />
+                    <Image
+                      src={newSelectedColor}
+                      width={600}
+                      height={839}
+                      alt="Product Image"
+                    />
                   ) : (
-                    <img src={item} />
+                    <Image
+                      src={item}
+                      width={600}
+                      height={839}
+                      alt="Product Image"
+                    />
                   )}
                 </SwiperSlide>
               ))}
@@ -87,7 +98,12 @@ const Product = (): JSX.Element => {
             >
               {items.bgImg.map((item, index) => (
                 <SwiperSlide key={index}>
-                  <img src={item} />
+                  <Image
+                    src={item}
+                    width={118.5}
+                    height={170}
+                    alt="Product Image"
+                  />
                 </SwiperSlide>
               ))}
             </Swiper>

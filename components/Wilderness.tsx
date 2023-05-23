@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 import {
   Box,
   Button,
@@ -7,7 +8,6 @@ import {
   Text,
   createStyles,
 } from "@mantine/core";
-import Image from "next/image";
 
 const Wilderness = (): JSX.Element => {
   const { classes } = useStyles();
@@ -16,19 +16,39 @@ const Wilderness = (): JSX.Element => {
       <Box className={classes.imgWrap}></Box>
 
       <Container size="xl" sx={{ textAlign: "center" }}>
-        <img
-          src="https://preview.codeless.co/june/default/wp-content/uploads/2017/11/vc.png"
-          style={{ marginBottom: "15px", width: "143px" }}
-        />
-        <Box>
+        <Box
+          sx={{
+            width: "143px",
+            height: "11px",
+            position: "relative",
+            margin: "0 auto",
+          }}
+        >
+          <Image
+            src={`https://preview.codeless.co/june/default/wp-content/uploads/2017/11/vc.png`}
+            alt="Demacation"
+            fill
+          />
+        </Box>
+        <Box sx={{ margin: "10px 0" }}>
           <Text className={classes.text}>WILDERNESS</Text>
           <Text className={classes.text}>PRINTED TEES</Text>
           <Text className={classes.text}>STARTING $12</Text>
         </Box>
-        <img
-          src="https://preview.codeless.co/june/default/wp-content/uploads/2017/11/vc.png"
-          style={{ marginTop: "15px", width: "143px" }}
-        />
+        <Box
+          sx={{
+            width: "143px",
+            height: "11px",
+            position: "relative",
+            margin: "0 auto",
+          }}
+        >
+          <Image
+            src={`https://preview.codeless.co/june/default/wp-content/uploads/2017/11/vc.png`}
+            alt="Demacation"
+            fill
+          />
+        </Box>
         <Box>
           <Button className={classes.cta}>SHOP COLLECTION</Button>
         </Box>

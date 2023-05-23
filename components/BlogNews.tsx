@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 import { Box, Container, Text, createStyles } from "@mantine/core";
 import { BsFillShareFill } from "react-icons/bs";
 import { AiOutlineHeart } from "react-icons/ai";
@@ -84,8 +85,8 @@ const BlogNews = (): JSX.Element => {
 
                   <Text className={classes.titleOther}>{title}</Text>
                   <Text sx={{ color: "#8b99a3", lineHeight: 1.3 }}>
-                    Do you think the ripped Denim you&apos;re wearing makes it good
-                    on its own? Do you?
+                    Do you think the ripped Denim you&apos;re wearing makes it
+                    good on its own? Do you?
                   </Text>
                 </Box>
               </SwiperSlide>
@@ -105,15 +106,16 @@ const BlogNews = (): JSX.Element => {
                   className={classes.contentBox}
                   key={id}
                 >
-                  <img
-                    src={icon}
-                    alt={iconAlt}
-                    style={{
-                      width: "40px",
-                      height: "43px",
-                      marginRight: "20px",
+                  <Box
+                    sx={{
+                      width: "43px",
+                      height: "40px",
+                      marginRight: "15px",
+                      position: "relative",
                     }}
-                  />
+                  >
+                    <Image src={icon} alt={iconAlt} fill />
+                  </Box>
                   <Box>
                     <Text className={classes.textHeader}>{text}</Text>
                     <Text className={classes.textOther}>{subText}</Text>
