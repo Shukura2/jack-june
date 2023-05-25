@@ -31,10 +31,6 @@ const Product = (): JSX.Element => {
   );
   const [qty, setQty] = useState<number>(1);
   const productItem = featured.find((item) => item.id === Number(productId));
-  /**
-   * refactor swiperItems to a state that can be modified
-   * and use it to set the thumbsSwiper
-   */
   const [swiperItems, setSwiperItems] = useState<string[]>([]);
 
   useEffect(() => {
@@ -42,7 +38,7 @@ const Product = (): JSX.Element => {
       setSwiperItems(productItem.bgImg);
     }
   }, [productItem]);
-  // go ahead and test
+
   useEffect(() => {
     thumbsSwiper?.slideTo(2);
   }, [thumbsSwiper]);
